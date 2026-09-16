@@ -11,45 +11,50 @@ This script allows you to both download and upload ngircd glines to/from a JSON
 file.  You can add it as a ExecStartPost script so that every time you start
 your server, the glines will be restored.
 
-# Requirements
+## Requirements
 
   * ngircd daemon
   * root access to ngircd and host
   * python 3
 
-# Installation
+## Installation
 
-## ngirc operator account
+### ngirc operator account
 You will need to have an **operator account** on ngircd for ircbanbot as
 only operators can manage glines in the server.
 
 Here's a sample operator account:
 
-`[Operator]
+```
+  [Operator]
         Name = banbot
         Password = change,me
-        Mask = *!banbot@*`
+        Mask = *!banbot@*
+```
 
-## ircbanbot script and virtual environment
+### ircbanbot script and virtual environment
 
 In this section we show how to install ircbanbot and a python
 virtual environment (.venv) in that same directory. Adjust
 these steps as needed in your own environment.
 
-`git clone https://github.com/jkbzh/ircbanbot.git
-cd ircbanbot`
+```
+git clone https://github.com/jkbzh/ircbanbot.git
+cd ircbanbot
+````
 
-# create and activate virtual environment
-`python3 -m venv .venv`
-`source .venv/bin/activate`
-
-# install package dependencies
+#### create and activate virtual environment
+```
+python3 -m venv .venv
+source .venv/bin/activate
+```
+#### install package dependencies
 `pip install --upgrade -r requirements.txt`
 
-# copy ircbanbot.conf.dist to ircbanbot.conf and edit it
-# you'll need to set up an irc operator account on ngircd
-# that will be used by ircbanbot. Here we assume you install
-# the configuration file to /etc/ircbanbot.conf
+Copy ircbanbot.conf.dist to ircbanbot.conf and edit it.
+You'll need to set up an irc operator account on ngircd
+that will be used by ircbanbot. Here we assume you install
+the configuration file to /etc/ircbanbot.conf
 
 `cp ircbanbot.conf.dist /etc/ircbanbot.conf`
 

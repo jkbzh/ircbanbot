@@ -79,7 +79,7 @@ GLINE_FILE="/var/lib/ircbanbot/glines.json"`
 
 On ngircd, as an operator, add a gline to ngircd using your operator account
 
-`/GLINE foo!~bar 0 :unauthorized bot`
+`/GLINE foo!~bar@*.* 0 :unauthorized bot`
 
 Check it's there
 
@@ -87,11 +87,15 @@ Check it's there
 
 Now download the glines using ircbanbot (your virtual environment has to be active)
 
-`ircbanbot.py -f /etc/ircbanbot.conf -d
-cat /var/log/glines.json`
+`ircbanbot.py -f /etc/ircbanbot.conf -d`
+
+Check the download worked
+
+`cat /var/log/glines.json`
 
 On ngircd, delete the gline you created
-`/GLINE foo!~bar 0 :unauthorized bot`
+
+`/GLINE foo!~bar@*.*`
 
 Check it's gone
 
@@ -101,7 +105,7 @@ Now restore the glines ircbanbot
 
 `ircbanbot.py -f /etc/ircbanbot.conf -u`
 
-Check it's back
+Check the gline was restored
 
 `/STATS g`
 

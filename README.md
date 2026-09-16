@@ -163,7 +163,7 @@ the script using the ircbanbot `SERVER\_WAIT` configuration option.
 These changes will ensure that each time your ngircd daemon is started, the glines
 will be uploaded.
 
-# glines.json format
+## glines.json format
 
 The file format is very basic and follows the gline command syntax. Here
 is a sample entry indefinitely banning a user with nickname `foo` connecting from any

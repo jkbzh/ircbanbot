@@ -41,9 +41,10 @@ cd ircbanbot`
 
 # create and activate virtual environment
 `python3 -m venv .venv`
+`source .venv/bin/activate`
 
 # install package dependencies
-`pip install --upgrade requirements.txt`
+`pip install --upgrade -r requirements.txt`
 
 # copy ircbanbot.conf.dist to ircbanbot.conf and edit it
 # you'll need to set up an irc operator account on ngircd
@@ -76,17 +77,33 @@ GLINE_FILE="/var/lib/ircbanbot/glines.json"`
 
 # test your installation
 
-Add a gline to ngircd using your operator account and then
-download the glines using ircbanbot (your virtual environment
-has to be active)
+On ngircd, as an operator, add a gline to ngircd using your operator account
+
+`/GLINE foo!~bar 0 :unauthorized bot`
+
+Check it's there
+
+`/STATS g`
+
+Now download the glines using ircbanbot (your virtual environment has to be active)
 
 `ircbanbot.py -f /etc/ircbanbot.conf -d
 cat /var/log/glines.json`
 
-Delete the gline you create on ngircd and then upload it using
-ircbanbot
+On ngircd, delete the gline you created
+`/GLINE foo!~bar 0 :unauthorized bot`
+
+Check it's gone
+
+`/STATS g`
+
+Now restore the glines ircbanbot
 
 `ircbanbot.py -f /etc/ircbanbot.conf -u`
+
+Check it's back
+
+`/STATS g`
 
 # integrating ircbanbot into your ngircd system setup
 
@@ -95,20 +112,24 @@ and uploaded to the ngircd server. This guarantees that you can
 restart your server without having to dowload the runtime gline
 status from time to time to avoid losing it.
 
-We first make a wrapper bash script that will launch ircbanbot from within the
-python virtual environment. We'll call this script `ircbanbot` and we'll assume
-that this script as well as the ircbanbot.py script and the virtual environment
-are all installed under `/usr/local/sbin`. Adjust as needed.
+Here below we assume that you have installed ircbanbot.py under
+/usr/local/sbin/ircbanbot/ and created its virtual environment in that same
+directory.
+
+We'll now make a wrapper script that will launch ircbanbot from within the
+python virtual environment and park it in /usr/local/sbin. We'll call this
+script `ircbanbot-wrapper`.
+
 
 `#!/bin/env bash
-exec /usr/local/sbin/.venv/ircbanbot/bin/python3 /usr/local/sbin/ircbanbot.py "$@" -f /etc/ircbanbot.conf`
+exec /usr/local/sbin/ircbanbot/.venv/bin/python3 /usr/local/sbin/ircbanbot/ircbanbot.py "$@" -f /etc/ircbanbot.conf`
 
 Next step is to edit the ngircd systemd unit and add an ExecStartPost command
 to use ircbanbot to upload the glines to the server once ngircd is ready.
 
 `systemctl edit ngircd
 
-ExecStartPost=-/usr/local/sbin/ircbanbot -u`
+ExecStartPost=-/usr/local/sbin/ircbanbot-wrapper -u`
 
 NOTE: If ircbanbot is running before ngircd is ready, you can add a delay to
 the script using the ircbanbot configuration file `SERVER_WAIT` option.

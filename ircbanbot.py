@@ -30,6 +30,8 @@ from dotenv import dotenv_values
 import irc.client
 import irc
 
+VERSION = "1.0.0"
+
 log = logging.getLogger(__name__)
 
 class IRCBanBot(irc.client.SimpleIRCClient):
@@ -269,6 +271,8 @@ def get_args():
     log_group = parser.add_mutually_exclusive_group()
     log_group.add_argument("-q", "--quiet", help='only log errors',
                            action="store_true")
+    log_group.add_argument("-v", "--version", help='show version and exit',
+                           action="store_true")
     log_group.add_argument("--debug",
                            help='display all debug messages, including IRC protocol exchanges',
                            action="store_true")
@@ -297,6 +301,10 @@ def main():
 
     logging.basicConfig(level=log_level)
     log.setLevel(log_level)
+
+    if args.version:
+        print(f"ircbanbot/{VERSION}")
+        sys.exit(0)
 
     if args.download:
         bot_action="download"

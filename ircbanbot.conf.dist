@@ -1,0 +1,19 @@
+# ircbanbot config (dotenv file - ~bash compatible)
+# if the env has any of these variables, it will override
+# the values in this file
+BOT_NICKNAME="banbot"
+IRC_SERVER="irc.example.org"
+IRC_PORT=6697
+
+# wait n seconds for irc server to be ready
+SERVER_WAIT=0
+
+# banbot account on ngircd
+# account name and password must be in sync
+IRC_OPERATOR_PASSWORD="change,me"
+ACCOUNT_NAME="banbot"
+ACCOUNT_PASSWORD="change,me"
+
+# path to file  used to store / upload glines
+# path must exist and be accessible to script
+GLINE_FILE="/var/lib/ircbanbot/glines.json"

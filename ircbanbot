@@ -1,0 +1,5 @@
+#!/bin/env bash
+ 
+# wrapper script to simplify invocation of ircbanbot
+ 
+exec /usr/local/sbin/.venv/ircbanbot/bin/python /usr/local/sbin/ircbanbot.py "$@" -f /etc//ircbanbot.conf

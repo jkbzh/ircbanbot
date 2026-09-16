@@ -175,7 +175,7 @@ a user gets when he is banned.
  {
   "msg":"unauthorized bot",
   "time":"0",
-  "user":"**foo**!**bar**@\*.\*"
+  "user":"foo!bar@*.*"
  }
 ]
 ```

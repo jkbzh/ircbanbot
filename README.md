@@ -2,14 +2,14 @@
 Python script that allows you to upload and download glines from an ngircd server
 
 A gline is an irc mechanism that allows you to ban a given user from an irc
-server.  Although the ngircd daemon supports glines, the gline info is only
+server.  Although the ngircd server supports glines, the gline info is only
 stored in the runtime process: ngircd doesn't have an option to store glines in
 a configuration file. If you restart the server, you will lose your current
 glines.
 
-This script allows you to both download and upload ngircd glines to/from a JSON
-file.  You can add it as a ExecStartPost script so that every time you start
-your server, the glines will be restored.
+This script lets you interfact with ngircd to both download and upload glines
+to/from a JSON file.  You can add it as a ExecStartPost script so that every
+time you start your server, the glines will be restored.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ your server, the glines will be restored.
 
 ## Installation
 
-### ngirc operator account
+### ngircd operator account
 You will need to have an **operator account** on ngircd for ircbanbot as
 only operators can manage glines in the server.
 
@@ -69,22 +69,22 @@ data.
 `editor ircbanbot.conf`
 
 ```
-BOT\_NICKNAME="banbot"
-IRC\_SERVER="irc.example.org"
-IRC\_PORT=669
+BOT_NICKNAME="banbot"
+IRC_SERVER="irc.example.org"
+IRC_PORT=669
 
 # wait n seconds for irc server to be ready
-SERVER\_WAIT=0
+SERVER_WAIT=0
  
 # banbot account on ngircd
 # account name and password must be in sync
-IRC\_OPERATOR_PASSWORD="change,me"
-ACCOUNT\_NAME="banbot"
-ACCOUNT\_PASSWORD="change,me"
+IRC_OPERATOR_PASSWORD="change,me"
+ACCOUNT_NAME="banbot"
+ACCOUNT_PASSWORD="change,me"
  
 # path to file  used to store / upload glines
 # path must exist and be accessible to script
-GLINE\_FILE="/var/lib/ircbanbot/glines.json"
+GLINE_FILE="/var/lib/ircbanbot/glines.json"
 ```
 ## test your setup
 

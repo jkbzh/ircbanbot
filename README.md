@@ -149,17 +149,20 @@ script `ircbanbot-wrapper`.
 `#!/bin/env bash
 exec /usr/local/sbin/ircbanbot/.venv/bin/python3 /usr/local/sbin/ircbanbot/ircbanbot.py "$@" -f /etc/ircbanbot.conf`
 
+**IMPORTANT**: before proceeding to the next step, use ircbanbot-wrapper to download the current
+glines from your server as later on we'll need to restart the server to take into
+account the configuration changes:
+
+`ircbanbot-wrapper -d`
+
 Next step is to edit the ngircd systemd unit and add an `ExecStartPost` directive
 to execute the `ircbanbot-wrapper` once ngircd is ready.
-
 
 `systemctl edit ngircd`
 
 Add the following line, save and quit.
 
 `ExecStartPost=-/usr/local/sbin/ircbanbot-wrapper -u`
-
-@@ check if this resets ngircd and we need to save the glines before that.
 
 These changes will ensure that each time your ngircd daemon is started, the glines
 will be uploaded.
@@ -168,7 +171,10 @@ will be uploaded.
 
 Before launching the test, make sure that you have at least one gline in the
 server. As operator, do a `/STAGS g` command. If you have no glines, add one as
-an operator, as described earlier in the doc.
+an operator, as described earlier in the doc.  If you do this, download the glines
+using the wrapper:
+
+`ircbanbot-wrapper -d`
 
 Restart your ngircd server
 

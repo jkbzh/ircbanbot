@@ -1,0 +1,5 @@
+#!/bin/env bash
+ 
+# wrapper script for running ircbanbot directly from its virtual environment
+ 
+exec /usr/local/sbin/.venv/bin/python3 /usr/local/sbin/ircbanbot.py "$@" -f /etc/ircbanbot.conf
